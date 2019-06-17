@@ -72,9 +72,9 @@ void printf_binary(int num) {
     printf("binary : %d\n", binary);
 }
 
-//2.7
-void test2_7(){
-    printf("2.7:\n");
+//2.8
+void test2_8(){
+    printf("2.8:\n");
     int a = 0b01101001;
     int b = 0b01010101;
 
@@ -110,9 +110,9 @@ void print_color(int color) {
     printf("\n");
 }
 
-//2.8
-void test2_8() {
-    printf("2.8:\n");
+//2.9
+void test2_9() {
+    printf("2.9:\n");
     int black = 0b000;
     int blue = 0b001;
     int green = 0b010;
@@ -130,12 +130,124 @@ void test2_8() {
     printf("\n");
 }
 
-void main() {
+void inplace_swap(int *x, int *y) {
+    *y = *x ^ *y;
+    *x = *x ^ *y;
+    *y = *x ^ *y;
+}
+
+//2.10
+void test2_10() {
+    printf("2.10:\n");
+    printf("性质 1：a^0=a  2: a^b^a=a^a^b 则： a^b^a=b \n");
+    int a = 10;
+    int b = 2;
+    printf("a = %d b = %d \n", a, b);
+    inplace_swap(&a, &b);
+    printf("a = %d b = %d \n", a, b);
+    printf("\n");
+}
+
+void reverse_array(int a[], int cnt) {
+    int first, last;
+    first = 0;
+    last = cnt - 1;
+    for (;first <= last;first++,last--) {
+        if (first != last) {//support any num
+            inplace_swap(&a[first], &a[last]);
+        }
+    }
+}
+
+//2.11
+void test2_11() {
+    printf("2.11:\n");
+    int a[6];
+    a[0] = 0;
+    a[1] = 1;
+    a[2] = 2;
+    a[3] = 3;
+    a[4] = 4;
+    a[5] = 5;
+    for (int i = 0; i< 6; i++) {
+        printf("%d", a[i]);
+    }
+    printf("\n");
+    reverse_array(a, 5);
+    for (int i = 0; i< 6; i++) {
+        printf("%d", a[i]);
+    }
+    printf("\n\n");
+}
+
+//2.12
+void test2_12() {
+    printf("2.12: \n");
+    int x = 0x87654321;
+    printf("~0 = %x\n", ~0);
+    printf("x最低有效字节 %x\n", x&0xff);
+    printf("x除最低有效字节，其他都取补 %x\n", (x&0xff) | (~(x|0xff)));
+    printf("x最低有效字节设置成全1 %x\n", x|0x000000ff);
+    printf("\n");
+}
+
+//模拟bis操作
+int bis(int x, int m) {
+    return x | m;
+}
+
+//模拟bic操作
+int bic(int x, int m) {
+    return ~m & x;
+}
+
+//2.13
+void test2_13() {
+    printf("2.13: \n");
+    printf("%x\n", bis(0x0, 0x0));
+    printf("%x\n", bis(0x0, 0x1));
+    printf("%x\n", bis(0x1, 0x0));
+    printf("%x\n", bis(0x1, 0x1));
+    printf("\n");
+    printf("%x\n", bic(0x0, 0x0));
+    printf("%x\n", bic(0x0, 0x1));
+    printf("%x\n", bic(0x1, 0x0));
+    printf("%x\n", bic(0x1, 0x1));
+    
+    int x = 0b10101;
+    int y = 0b01010;
+    int bisXy = bis(x, y);
+    printf("x^y = bis(bic(bis(x, y), x), bic(bis(x, y), y)) : \n");
+    printf_binary(bis(bic(bisXy, x), bic(bisXy, y)));
+    
+    printf("\n");
+}
+
+int checkXY(int x, int y) {
+    return ~(x-y|y-x);
+}
+
+//2.15
+void test2_15() {
+    printf("2.15:\n");
+    int x = 123;
+    int y = 123;
+    printf("%x\n", checkXY(x, y));
+    
+    printf("\n");
+}
+
+int main() {
     printf("hello world\n");
     show_float(0);
     test2_5();
     test2_6();
-    test2_7();
     test2_8();
+    test2_9();
+    test2_10();
+    test2_11();
+    test2_12();
+    test2_13();
+    test2_15();
 }
 
